@@ -75,7 +75,9 @@ int main(int argc, char *argv[])
   std::chrono::nanoseconds total_fft_time(0);
   std::chrono::nanoseconds fft2d_time(0);
   std::chrono::nanoseconds argshift_time(0);
-  std::chrono::nanoseconds summations_fft_time(0);
+  std::chrono::nanoseconds summations_fft_time_srad(0);
+  std::chrono::nanoseconds summations_fft_time_sang(0);
+  std::chrono::nanoseconds summations_fft_time_stats(0);
   std::chrono::nanoseconds DT_fft_time(0);
   // FWT timers
   std::chrono::nanoseconds total_wavelet_time(0);
@@ -250,7 +252,7 @@ int main(int argc, char *argv[])
 
     argshift_time += (std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - start_argshift));
 
-    auto start_summations_fft = std::chrono::high_resolution_clock::now();
+    auto start_summations_fft_srad = std::chrono::high_resolution_clock::now();
 
     // sum on cirles and lines
     // image width
@@ -306,6 +308,9 @@ int main(int argc, char *argv[])
       //printf("\nsrad[%d] = %0.2f\n", curr_radius, srad[curr_radius]);
     }
 
+    summations_fft_time_srad += (std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() -  start_summations_fft_srad));
+
+    auto start_summations_fft_sang = std::chrono::high_resolution_clock::now();
     prev_xc = 0;
     prev_yc = 0;
 
@@ -338,6 +343,9 @@ int main(int argc, char *argv[])
       }
     }
 
+    summations_fft_time_sang += (std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() -  start_summations_fft_sang));
+
+    auto start_summations_stats_fft = std::chrono::high_resolution_clock::now();
     // Spectral features srad
     // max
     float sradMax = srad[1];
@@ -420,7 +428,7 @@ int main(int argc, char *argv[])
     }
     #endif
 
-    summations_fft_time += (std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - start_summations_fft));
+    summations_fft_time_stats += (std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - start_summations_stats_fft));
 
     auto start_DT_fft = std::chrono::high_resolution_clock::now();
     // different feature vectors in every run
@@ -590,12 +598,14 @@ int main(int argc, char *argv[])
     //cout << "Prediction: " << DTll << endl;
   }
 
-  total_fft_time = fft2d_time + argshift_time + summations_fft_time + DT_fft_time;
+  total_fft_time = fft2d_time + argshift_time + summations_fft_time_srad + summations_fft_time_sang + summations_fft_time_stats + DT_fft_time;
   std::cout << "avg. Total FFT classification time: " << total_fft_time.count()/NLOOP << endl;
   std::cout << "avg. fft2d time: " << fft2d_time.count()/NLOOP << endl;
   std::cout << "avg. argshift fft time: " << argshift_time.count()/NLOOP << endl;
-  std::cout << "avg. summations fft time: " << summations_fft_time.count()/NLOOP << endl;
-  std::cout << "avg. DT fft time: " <<   DT_fft_time.count()/NLOOP << endl;
+  std::cout << "avg. summations fft srad: " << summations_fft_time_srad.count()/NLOOP << endl;
+  std::cout << "avg. summations fft sang: " << summations_fft_time_sang.count()/NLOOP << endl;
+  std::cout << "avg. summations fft stats: " << summations_fft_time_stats.count()/NLOOP << endl;
+  std::cout << "avg. DT fft time: " << 	DT_fft_time.count()/NLOOP << endl;
 
   std::cout << "----------" << endl;
 
