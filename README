@@ -1,0 +1,9 @@
+The evaluation tool source code for the frequency domain based virus classification with PAMONO sensor images 
+
+How to use this tool:
+
+1. Go to http://www.fftw.org/, and download and compile the latest fftw library (libfftw3f.a) for your platform.
+2. Insert the library file into the lib folder of this repository.
+3. Open run_eval.cpp, and if desired, edit the evaluation parameters (the first six macros). 
+4. Run "make" in the root of this repository to compile the tool.
+5. Execute ./run_eval to execute the experiments and view the results.
