@@ -2,7 +2,7 @@ The evaluation tool source code for the frequency domain based virus classificat
 
 How to use this tool:
 
-1. Go to http://www.fftw.org/, and download and compile the latest fftw library (libfftw3f.a) for your platform.
+1. Go to http://www.fftw.org/, and download and compile the latest fftw library (libfftw3f.a) for your platform (executing ./configure && make && make install) in the fftw folder.
 2. Insert the library file into the lib folder of this repository.
 3. Open run_eval.cpp, and if desired, edit the evaluation parameters (the first six macros). 
 4. Run "make" in the root of this repository to compile the tool.
