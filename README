@@ -1,4 +1,6 @@
-The evaluation tool source code for the frequency domain based virus classification with PAMONO sensor images 
+This repository containts the source code of the evaluation tool used in the paper "Nanoparticle Classification Using Frequency Domain Analysis on Resource-Limited Platforms".
+The work is about frequency domain based virus classification with PAMONO sensor images.
+The results are published here: https://www.mdpi.com/1424-8220/19/19/4138
 
 How to use this tool:
 
